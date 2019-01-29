@@ -29,18 +29,17 @@ to find out which commands are available.
     
 ## References
 
-<https://scuttlebot.io/docs/config/configure-scuttlebot.html>
+- <https://scuttlebot.io/docs/config/configure-scuttlebot.html>
+- <https://github.com/ssbc/ssb-server>
 
-<https://github.com/ssbc/ssb-server>
-<https://github.com/ssbc/ssb-client>
-<https://github.com/ssbc/scuttlebot-release>
+- <https://github.com/ssbc/ssb-client>
+- <https://github.com/ssbc/scuttlebot-release>
 
-<https://github.com/ssbc/ssb-config>
-<https://github.com/ssbc/ssb-invite>
-<https://github.com/ssbc/ssb-tunnel>
-
-<https://github.com/dthree/vorpal/wiki>
+- <https://github.com/ssbc/ssb-config>
+- <https://github.com/ssbc/ssb-invite>
+- <https://github.com/ssbc/ssb-tunnel>
+- <https://github.com/dthree/vorpal/wiki>
 
 # TODO
 
-- [ ] See if I can use compose to configure network and node scenarios in one go. 
+- [ ] Investigate why invites do not work, could be that the custom app-key is not applied.
