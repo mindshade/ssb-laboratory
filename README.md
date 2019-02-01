@@ -9,9 +9,16 @@ Clone this repo.
 
 ## Starting a lab SSB node
 
-    ./ssb-node-start.sh <node_name>
-    
-This builds the container, sets up volumes and creates a docker network, then starts an instance with the given node name.
+First build the base container. This builds the node modules, which takes a little while. Good thing is that this build
+of `node_modules` is available when a container is created which makes creation very quick. Note: If big changes are made 
+to `package.json` it could be a time saver to rebuild the image again instead if updating using `yarn install` in each
+container instance. 
+
+    ./ssb-node.sh build
+
+Now use the `start` command which sets up volumes and creates a docker network, then starts an instance with the given node name.
+
+    ./ssb-node.sh start <node_name>
 
 By default no incoming connections are allowed to the node. To enable incoming connections (for simulating a hub/portal) issue:
 
@@ -26,6 +33,70 @@ Inside the CLI use,
     help
     
 to find out which commands are available.
+    
+## Testing out ssb-tunnel
+
+In this scenario we will start three nodes A, B and C, where B will act as a hub/portal letting A and C communicate
+directly without any direct network contact between them.
+
+Tip: Open three terminal windows and perform the steps in parallel for all three nodes.
+
+Be careful to execute the steps in order, as globally numbered (for all ssb-node instances).
+
+### Node A
+
+#### Step 1
+
+    ./ssb-node.sh start ssb-A.local
+    yarn start 
+    
+#### Step 3
+    
+    # Connect to hub and establish tunnel (see step 2 below for $PORTALADDRESS)
+    start --tunnel $PORTALADRESS
+    
+#### Step 4
+
+    # Find out A:s ID so we can send a message from C
+    getId
+    # Lets denote the ID as $ID_A
+
+### Node B (hub/portal)
+
+#### Step 1
+
+    ./ssb-node.sh start ssb-B.local
+    # Open network port for incomping connections, since B is a hub
+    source script/fw-hub.sh
+    yarn start
+
+#### Step 2
+
+    # Start the ssb-server in portal mode
+    start --portal
+    # Find the address to connect tunnels to from A and C
+    getAddress
+    # Lets denote the address returned as $PORTALADDRESS
+
+### Node C
+
+#### Step 1
+
+    ./ssb-node.sh start ssb-C.local
+    yarn start
+
+#### Step 3
+    
+    # Connect to hub and establish tunnel (see step 2 below for $PORTALADDRESS)
+    start --tunnel $PORTALADRESS     
+    
+#### Step 5
+
+    # Get the $ID_A from step 4 above and then send a message from C to A
+    chat "Hello this is C calling A!" $ID_A
+    
+    # Now the message should be printed in A:s console. 
+    # How about trying to send a message back from A to C?
     
 ## References
 

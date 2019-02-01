@@ -1,13 +1,10 @@
 FROM node:carbon-alpine
-# as ssb-node-intermediate
 
 RUN apk add nano python make libtool g++ autoconf automake iptables iftop git
 
 RUN mkdir -p /root/ssb-node
-#COPY package.json /root/ssb-node
-
-RUN mkdir /root/ssb-node/node_modules
-VOLUME /root/ssb-node/node_modules
+COPY package.json /root/ssb-node
+COPY yarn.lock /root/ssb-node
 
 RUN mkdir -p /cache/yarn
 VOLUME /cache
@@ -15,29 +12,20 @@ RUN yarn config set cache-folder /cache/yarn
 
 # Install packages, and remove package.json + yarn.lock since they are mounted from the host when
 # a container is started (for ease of development).
-#WORKDIR /root/ssb-node
-#RUN yarn install
-#RUN rm package.json yarn.lock
-
-# Second step
-# FROM node:carbon-alpine
+WORKDIR /root/ssb-node
+RUN yarn install
+RUN rm package.json yarn.lock
 
 ENV NODE_IP="$(hostname -i)"
 ENV HOST_NAME="$(hostname)"
 ENV PS1="\[\033[01;31m\]\u@"$HOST_NAME"|"$NODE_IP" \w $\[\033[00m\] "
 
-# COPY --from=ssb-node-intermediate /root/ssb-node /root/ssb-node
-
-#COPY src /root/ssb-node/src
 VOLUME /root/ssb-node/package.json
 VOLUME /root/ssb-node/yarn.lock
 VOLUME /root/ssb-node/src
 VOLUME /root/ssb-node/script
 
 WORKDIR /root/ssb-node
-#ENTRYPOINT yarn start
 
 ENV ENV=/root/ssb-node/script/fw.sh
 ENTRYPOINT /bin/ash
-
-#--rcfile /root/ssb-node/script/fw.sh
