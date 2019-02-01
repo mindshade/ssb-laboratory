@@ -1,8 +1,6 @@
-const process = require('process');
 const vorpal = require('vorpal')();
 const pull = require('pull-stream');
 const server = require('./server');
-const client = require('./client');
 const labconfig = require('./labconfig');
 
 async function stopServers(state) {
@@ -23,8 +21,6 @@ async function stopServers(state) {
             });
         }
 
-        await _doClose(state.ssb_client, 'Client');
-        state.ssb_client = null;
         await _doClose(state.ssb_server, 'Server');
         state.ssb_server = null;
         resolve();
@@ -41,7 +37,7 @@ function log(msg) {
 }
 
 function logErr(err) {
-    vorpal.log(vorpal.chalk.red(JSON.stringify(err)));
+    vorpal.log(vorpal.chalk.red(err.stack ? err.stack : JSON.stringify(err)));
 }
 
 function logAsJSON(obj, pretty) {
@@ -62,42 +58,51 @@ function logAsJSON(obj, pretty) {
         .option('-v, --verbose', 'Verbose')
         .option('-p, --portal', 'Start in portal/hub mode.')
         .option('-t, --tunnel <portalAddres>', 'Open a tunnel to portal with given address')
-        .description('Start ssb_server and ssb_client. If already started they will be restarted.')
+        .description('Start ssb_server. If already started it will be restarted.')
         .action(async function (args, cb) {
+            try {
+                await stopServers(state);
 
-            logAsJSON(args,true);
+                const configs = [];
+                configs.push(server.cfgDefault(ip, port));
+                if (args.options.portal) {
+                    configs.push(server.cfgPortal(hostname, ip, port));
+                }
+                if (args.options.tunnel) {
+                    state.portalAddress = args.options.tunnel;
+                    state.portalId = '@'+/^.*shs:([^=]+=)$/g.exec(state.portalAddress)[1]+'.ed25519';
+                    configs.push(server.cfgTunnelToPortal(state.portalId, state.portalAddress));
+                }
 
-            await stopServers(state);
-
-            const configs = [];
-            configs.push(server.cfgDefault(ip, port));
-            if (args.options.portal) {
-                configs.push(server.cfgPortal(hostname, ip, port));
+                state.ssb_server = server.start(args.options.verbose, ...configs);
+            } catch (e) {
+                logErr(e);
             }
-            if (args.options.tunnel) {
-                state.portalAddress = args.options.tunnel;
-                state.portalId = '@'+/^.*shs:([^=]+=)$/g.exec(state.portalAddress)[1]+'.ed25519';
-                configs.push(server.cfgTunnelToPortal(state.portalId, state.portalAddress));
-            }
-
-            state.ssb_server = await server.start(args.options.verbose, ...configs);
-            state.ssb_client = await client.start(args.options.verbose, ip, port);
             cb();
         });
 
-    vorpal.command('stop', 'Stop ssb_server and ssb_client.')
+    vorpal.command('stop', 'Stop ssb_server.')
         .action(async function (args, cb) {
-            await stopServers(state);
+            try {
+                await stopServers(state);
+            } catch (e) {
+                logErr(e);
+            }
             cb();
         });
 
-    vorpal.command('whoami', 'Show my ssb id.')
+    vorpal.command('getId', 'Show my ssb identity, using the whoami method.')
+        .option('-v, --verbose', 'Verbose')
         .action(function (args, cb) {
-            if (state.ssb_client) {
-                state.ssb_client.whoami(function (err, msg) {
+            if (state.ssb_server) {
+                state.ssb_server.whoami(function (err, msg) {
                     if (err) logErr(err);
                     else {
-                        logAsJSON(msg, true);
+                        if (args.options.verbose) {
+                            logAsJSON(msg, true);
+                        } else {
+                            log(msg.id);
+                        }
                     }
                 });
             } else {
@@ -118,10 +123,10 @@ function logAsJSON(obj, pretty) {
 
     vorpal.command('logStream', 'Dump the entire message log.')
         .action(function (args, cb) {
-            if (state.ssb_client) {
+            if (state.ssb_server) {
                 let index = 0;
                 pull(
-                    state.ssb_client.createLogStream({type: 'post', live: false}),
+                    state.ssb_server.createLogStream({type: 'post', live: false}),
                     pull.collect(function (err, msgs) {
                         if (err) {
                             logErr(err);
@@ -134,7 +139,7 @@ function logAsJSON(obj, pretty) {
                     })
                 );
             } else {
-                log("Client not started");
+                log("Server not started");
                 cb();
             }
         });
@@ -142,8 +147,8 @@ function logAsJSON(obj, pretty) {
     vorpal.command('post <message>', 'Post a message to the message log.')
         .option('-v, --verbose', 'Log posted message structure')
         .action(function (args, cb) {
-            if (state.ssb_client) {
-                state.ssb_client.publish({type: 'post', text: args.message}, function (err, msg) {
+            if (state.ssb_server) {
+                state.ssb_server.publish({type: 'post', text: args.message}, function (err, msg) {
                     if (err) {
                         logErr(err)
                     } else if (args.options.verbose) {
@@ -152,7 +157,7 @@ function logAsJSON(obj, pretty) {
                     cb();
                 });
             } else {
-                log("Client not started");
+                log("Server not started");
                 cb();
             }
         });
@@ -179,14 +184,14 @@ function logAsJSON(obj, pretty) {
 
     vorpal.command('accept <invite>', 'Accept an invite to joina a pub/hub/portal.')
         .action(function (args, cb) {
-            if (state.ssb_client) {
-                state.ssb_client.invite.accept(args.invite, function (err) {
+            if (state.ssb_server) {
+                state.ssb_server.invite.accept(args.invite, function (err) {
                     if (err) logErr(err);
                     else vorpal.log('Invite used.');
                     cb();
                 });
             } else {
-                log("Client not started");
+                log("Server not started");
                 cb();
             }
         });
@@ -206,8 +211,7 @@ function logAsJSON(obj, pretty) {
                                 logAndCb(cb, err);
                             } else {
                                 vorpal.log("ping returned: "+_ts);
-                                rpc_remote.close();
-                                cb();
+                                rpc_remote.close(cb);
                             }
                         });
                     }
@@ -216,28 +220,54 @@ function logAsJSON(obj, pretty) {
                 log("Server not started, or tunnel is not activated.");
                 cb();
             }
+        });
+
+    vorpal.command('listTunnels', 'List the connected tunnels.')
+        .action(function (args, cb) {
+            if (state.ssb_server) {
+                logAsJSON(state.ssb_server.tunnel.list(), true);
+            } else {
+                log("Server not started.")
+            }
+            cb();
         });
 
     vorpal.command('chat <msg> <ssb_key>', 'Send direct chat message to remote ssb node using a tunnel.')
         .action(function (args, cb) {
 
+            const remoteId = /^@([^=]+=)\.ed25519$/g.exec(args.ssb_key)[1];
+            const tunnelAddress = `tunnel:${state.portalId}:${args.ssb_key}~shs:${remoteId}`;
+
+            function _connectRpc(tunnelAddress, cb) {
+                if (!state.rpcs) {
+                    state.rpcs = {};
+                }
+                if (state.rpcs && state.rpcs[remoteId] && !state.rpcs[remoteId].closed) {
+                    vorpal.log("Reused exisiting remote rpc connection to:"+state.rpcs[remoteId].id);
+                    cb(null, state.rpcs[remoteId]);
+                } else {
+                    state.ssb_server.connect(tunnelAddress, function (err, rpc_remote) { // See node_modules/secret-stack/core.js:206
+                        if (err) {
+                            cb(err);
+                        } else {
+                            vorpal.log("Opened new remote rpc connection to:"+rpc_remote.id);
+                            state.rpcs[remoteId] = rpc_remote;
+                            cb(null, rpc_remote);
+                        }
+                    });
+                }
+            }
+
             if (state.ssb_server && state.portalId && state.portalAddress) {
-                const remoteId = /^@([^=]+=)\.ed25519$/g.exec(args.ssb_key)[1];
-                const tunnelAddress = `tunnel:${state.portalId}:${args.ssb_key}~shs:${remoteId}`;
-                state.ssb_server.connect(tunnelAddress, function (err, rpc_remote) {
-                    if (err) {
-                        logAndCb(cb, err);
-                    } else {
-                        vorpal.log("Talking to rpc_remote id = "+rpc_remote.id);
-                        rpc_remote.chat.hello(args.msg, function (err, reply) {
-                            if (err) {
-                                logAndCb(cb, err);
-                            } else {
-                                vorpal.log("hello returned: " + reply);
-                                cb();
-                            }
-                        });
-                    }
+                _connectRpc(tunnelAddress, function(err, rpc_remote) {
+                    if (err) logErr(err);
+                    else rpc_remote.chat.hello(args.msg, function (err, reply) {
+                        if (err) logErr(err);
+                        else {
+                            vorpal.log("hello returned: " + reply);
+                        }
+                    });
+                    cb();
                 });
             } else {
                 log("Server not started, or tunnel is not activated.");
@@ -245,8 +275,11 @@ function logAsJSON(obj, pretty) {
             }
         });
 
-
-    vorpal
-        .delimiter(vorpal.chalk.yellow(`[${hostname} ${ip}]>`)) //${state.ssb_server.id}
-        .show();
+    try {
+        vorpal
+            .delimiter(vorpal.chalk.yellow(`[${hostname} ${ip}]>`))
+            .show();
+    } catch (e) {
+        logErr(e);
+    }
 })();

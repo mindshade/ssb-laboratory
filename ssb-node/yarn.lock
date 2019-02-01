@@ -611,7 +611,7 @@ debug@^3.2.6:
   dependencies:
     ms "^2.1.1"
 
-debug@^4.1.0:
+debug@^4.1.0, debug@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
   integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
@@ -691,7 +691,7 @@ define-property@^2.0.2:
     is-descriptor "^1.0.2"
     isobject "^3.0.1"
 
-defined@^1.0.0, defined@~1.0.0:
+defined@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/defined/-/defined-1.0.0.tgz#c98d9bcef75674188e110969151199e39b1fa693"
   integrity sha1-yY2bzvdWdBiOEQlpFRGZ45sfppM=
@@ -1725,7 +1725,7 @@ level-post@^1.0.7:
   dependencies:
     ltgt "^2.1.2"
 
-level-sublevel@^6.6.2:
+level-sublevel@^6.6.5:
   version "6.6.5"
   resolved "https://registry.yarnpkg.com/level-sublevel/-/level-sublevel-6.6.5.tgz#acddfa2be033b9e503544e2c647f3c03d5a23fbd"
   integrity sha512-SBSR60x+dghhwGUxPKS+BvV1xNqnwsEUBKmnFepPaHJ6VkBXyPK9SImGc3K2BkwBfpxlt7GKkBNlCnrdufsejA==
@@ -1946,7 +1946,7 @@ math-random@^1.0.1:
   resolved "https://registry.yarnpkg.com/math-random/-/math-random-1.0.4.tgz#5dd6943c938548267016d4e34f057583080c514c"
   integrity sha512-rUxjysqif/BZQH2yhd5Aaq7vXMSx9NdEsQcyA07uEzIvxgI7zIr33gGsh+RU0/XjmQpCW7RsVof1vlkvQVCK5A==
 
-mdmanifest@^1.0.4:
+mdmanifest@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/mdmanifest/-/mdmanifest-1.0.8.tgz#c04891883c28c83602e1d06b05a11037e359b4c8"
   integrity sha1-wEiRiDwoyDYC4dBrBaEQN+NZtMg=
@@ -2157,6 +2157,14 @@ muxrpc-validation@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/muxrpc-validation/-/muxrpc-validation-2.0.1.tgz#cd650d172025fe9d064230aab38ca6328dd16f2f"
   integrity sha1-zWUNFyAl/p0GQjCqs4ymMo3Rby8=
+  dependencies:
+    pull-stream "^2.28.3"
+    zerr "^1.0.1"
+
+muxrpc-validation@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/muxrpc-validation/-/muxrpc-validation-3.0.0.tgz#e3b6c031a7ad380f02ad67d9306d4f1b3f8d35d6"
+  integrity sha1-47bAMaetOA8CrWfZMG1PGz+NNdY=
   dependencies:
     pull-stream "^2.28.3"
     zerr "^1.0.1"
@@ -2423,7 +2431,7 @@ on-change-network@0.0.2:
   resolved "https://registry.yarnpkg.com/on-change-network/-/on-change-network-0.0.2.tgz#d977249477f91726949d80e82346dab6ef45216b"
   integrity sha1-2XcklHf5FyaUnYDoI0batu9FIWs=
 
-on-wakeup@^1.0.0:
+on-wakeup@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/on-wakeup/-/on-wakeup-1.0.1.tgz#00d79d987dde7c8117bee74bb4903f6f6dafa52b"
   integrity sha1-ANedmH3efIEXvudLtJA/b22vpSs=
@@ -2771,12 +2779,12 @@ pull-many@~1.0.6:
   dependencies:
     pull-stream "^3.4.5"
 
-pull-next@^1.0.0:
+pull-next@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/pull-next/-/pull-next-1.0.1.tgz#03f4d7d19872fc1114161e88db6ecf4c65e61e56"
   integrity sha1-A/TX0Zhy/BEUFh6I227PTGXmHlY=
 
-pull-notify@0.1.1, pull-notify@^0.1.0, pull-notify@^0.1.1:
+pull-notify@^0.1.0, pull-notify@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/pull-notify/-/pull-notify-0.1.1.tgz#6f86ff95d270b89c3ebf255b6031b7032dc99cca"
   integrity sha1-b4b/ldJwuJw+vyVbYDG3Ay3JnMo=
@@ -2788,7 +2796,7 @@ pull-pair@^1.1.0, pull-pair@~1.1.0:
   resolved "https://registry.yarnpkg.com/pull-pair/-/pull-pair-1.1.0.tgz#7ee427263fdf4da825397ac0a05e1ab4b74bd76d"
   integrity sha1-fuQnJj/fTaglOXrAoF4atLdL120=
 
-pull-paramap@^1.1.3, pull-paramap@^1.1.6, pull-paramap@^1.2.1, pull-paramap@^1.2.2, pull-paramap@~1.2.1:
+pull-paramap@^1.1.3, pull-paramap@^1.2.1, pull-paramap@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/pull-paramap/-/pull-paramap-1.2.2.tgz#51a4193ce9c8d7215d95adad45e2bcdb8493b23a"
   integrity sha1-UaQZPOnI1yFdla2tReK824STsjo=
@@ -2850,13 +2858,6 @@ pull-stream@~3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/pull-stream/-/pull-stream-3.5.0.tgz#1ee5b6f76fd3b3a49a5afb6ded5c0320acb3cfc7"
   integrity sha1-HuW292/Ts6SaWvtt7VwDIKyzz8c=
-
-pull-stringify@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/pull-stringify/-/pull-stringify-2.0.0.tgz#22ba31da95af0888e0fb559238b1fa915a6a5b64"
-  integrity sha1-Irox2pWvCIjg+1WSOLH6kVpqW2Q=
-  dependencies:
-    defined "^1.0.0"
 
 pull-through@^1.0.17, pull-through@^1.0.18:
   version "1.0.18"
@@ -3134,7 +3135,7 @@ ret@~0.1.10:
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
   integrity sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==
 
-rimraf@^2.2.8, rimraf@^2.4.2, rimraf@^2.6.1:
+rimraf@^2.2.8, rimraf@^2.4.2, rimraf@^2.6.1, rimraf@^2.6.2:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.3.tgz#b2d104fe0d8fb27cf9e0a1cda8262dd3833c6cab"
   integrity sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==
@@ -3194,10 +3195,10 @@ secret-handshake@^1.1.12, secret-handshake@^1.1.16:
     pull-handshake "^1.1.1"
     pull-stream "^3.4.5"
 
-secret-stack@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/secret-stack/-/secret-stack-5.1.0.tgz#0122adf41ca643594c50da1b54d648862150a673"
-  integrity sha512-lCY0Oad4BYSKDlMbVXNEZEF8qVTbz2tNB7oNdlZAFg7k558Njq/bCx5MEj9GWmc+n+GhnxAXQYB5+CX1+0v4iQ==
+secret-stack@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/secret-stack/-/secret-stack-6.0.1.tgz#0b78d6a45cb6efc2f61dc4c12b4567882d3d4210"
+  integrity sha512-MdHEFYloAkE7BtXYMCF03o8q5UaJDCfA2OLakt5rauaVXkUl0xDD9FC4/VjmzuA7+BxmQIkgIiG0bI0cg3PfgQ==
   dependencies:
     debug "^4.1.0"
     hoox "0.0.1"
@@ -3427,12 +3428,13 @@ split-string@^3.0.1, split-string@^3.0.2:
   dependencies:
     extend-shallow "^3.0.0"
 
-ssb-blobs@^1.1.4:
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/ssb-blobs/-/ssb-blobs-1.1.9.tgz#f6f8563495b233d674d0a175293f62fc6a4a7adc"
-  integrity sha512-CkI12tt5looI54X2dhsMNwoVqVcff471ZgEhew69g2EPByfejryuoOnAZUuQhgYDBLISQj5oID2R+7wCH6yOyQ==
+ssb-blobs@^1.1.11, ssb-blobs@^1.1.9:
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/ssb-blobs/-/ssb-blobs-1.1.11.tgz#9e315a8a03359bd9ef79f6002f4a350c8e6236d7"
+  integrity sha512-jlFMVrO8QoZU5Gnq/JimVBN2h022LGcPMTTPs3YOgN6r2xtTW94RTjcfaAvasKuhQuFycEUmC7GofEtE3D012Q==
   dependencies:
     cont "^1.0.3"
+    debug "^4.1.1"
     level "^4.0.0"
     multiblob "^1.12.0"
     pull-level "^2.0.4"
@@ -3440,7 +3442,7 @@ ssb-blobs@^1.1.4:
     pull-stream "^3.3.0"
     ssb-ref "^2.3.0"
 
-ssb-client@^4.5.7, ssb-client@^4.6.1:
+ssb-client@^4.5.7, ssb-client@^4.6.0:
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/ssb-client/-/ssb-client-4.6.1.tgz#b647def34a9eace732305529becbd2317f8367d6"
   integrity sha512-uys8CG2F+KP1wHrweccUlx2dmYk1jBSE7UtN77avZkCM+pQUPtzx6F736G29eNy9jltbMrFgig2X000VnAR7gw==
@@ -3454,7 +3456,7 @@ ssb-client@^4.5.7, ssb-client@^4.6.1:
     ssb-config "^2.2.0"
     ssb-keys "^7.0.13"
 
-ssb-config@^2.2.0, ssb-config@^2.3.7:
+ssb-config@^2.2.0:
   version "2.3.9"
   resolved "https://registry.yarnpkg.com/ssb-config/-/ssb-config-2.3.9.tgz#802d327984ec37d9deab534f444c87cd5145f183"
   integrity sha512-UF+4+khFXILLBqtu9HfrpUwYnDXIdAyJe3u9X4GrApuoakxuSKwaUGakUxLPyo6COyV2brMqufUgf+fDOI8Ftw==
@@ -3476,10 +3478,23 @@ ssb-config@^3.0.0:
     rc "^1.1.6"
     ssb-keys "^7.1.4"
 
-ssb-db@^18.6.2:
-  version "18.6.5"
-  resolved "https://registry.yarnpkg.com/ssb-db/-/ssb-db-18.6.5.tgz#a8d243b0b4b46f5a71ee4a1e61fa3b7bc9266244"
-  integrity sha512-/4nFP7yj1JD5jrwX9bHG2nipBefl++xXXbNWD14eL+Ohs3X8kdmJeBKnHgiIF7Je4HQOI31OmEIdyyLKum5niQ==
+ssb-config@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/ssb-config/-/ssb-config-3.2.3.tgz#b84859cffa15c925eb72ff451708390a32a622e7"
+  integrity sha512-5hj8DMV74hWuCHgGjzHWOgzZSJ8v7ebIwXVa3t1IJbXfxFycNnbhpL8wXBwJ774nMTXSL9xEXrpvFuAmZ5qT0Q==
+  dependencies:
+    deep-extend "^0.6.0"
+    lodash.get "^4.4.2"
+    non-private-ip "^1.2.1"
+    os-homedir "^1.0.1"
+    rc "^1.1.6"
+    ssb-client "^4.6.0"
+    ssb-keys "^7.1.4"
+
+ssb-db@^19.0.3:
+  version "19.0.3"
+  resolved "https://registry.yarnpkg.com/ssb-db/-/ssb-db-19.0.3.tgz#7699ca32f553b33a7a1969876bda22e3f9cb265e"
+  integrity sha512-9XgPbqpGlqr/F0aGMhChfO9b20uuDa8ldnhZF9vH6+TeSSdLV545xM3WMDz8lpEfDJIvX9dAbMUGxeu+ZJaIzg==
   dependencies:
     async-write "^2.1.0"
     cont "~1.0.0"
@@ -3489,26 +3504,27 @@ ssb-db@^18.6.2:
     flumeview-hashtable "^1.0.3"
     flumeview-level "^3.0.5"
     flumeview-reduce "^1.3.9"
-    level "^4.0.0"
-    level-sublevel "^6.6.2"
     ltgt "^2.2.0"
+    mdmanifest "^1.0.8"
+    mkdirp "^0.5.1"
     monotonic-timestamp "~0.0.8"
+    muxrpc-validation "^3.0.0"
     obv "0.0.1"
+    osenv "^0.1.5"
     pull-cont "^0.1.1"
-    pull-level "^2.0.3"
-    pull-live "^1.0.1"
-    pull-paramap "^1.1.6"
     pull-stream "^3.4.0"
+    rimraf "^2.6.2"
     ssb-keys "^7.1.3"
     ssb-msgs "^5.0.0"
     ssb-ref "^2.12.0"
     ssb-validate "^4.0.0"
     typewiselite "^1.0.0"
+    zerr "^1.0.0"
 
-ssb-ebt@^5.1.4:
-  version "5.3.9"
-  resolved "https://registry.yarnpkg.com/ssb-ebt/-/ssb-ebt-5.3.9.tgz#b05c6323d99905e7287322180ae1f1dbc289eda1"
-  integrity sha512-PAKC5PKSFuZc0YMXKBKK+WMj25H6mFpp1/H/wXT45HOQkDi0mEUDUCjzTeESFdRIsakDKr5Qpctm8Rvd3PfCZw==
+ssb-ebt@^5.3.8:
+  version "5.3.10"
+  resolved "https://registry.yarnpkg.com/ssb-ebt/-/ssb-ebt-5.3.10.tgz#fc4b057b28bf85c5198d4c1a225ee3aca0afab1a"
+  integrity sha512-HZ22SDesryGkv5FbUQw/iHth0iJjffFPjZrr61Hx7u1oe3ww5ih6+SjKlcsJmN2zghBN14Kk0tRrqfU9DOKsUw==
   dependencies:
     base64-url "^2.2.0"
     epidemic-broadcast-trees "^6.3.5"
@@ -3517,7 +3533,7 @@ ssb-ebt@^5.1.4:
     push-stream-to-pull-stream "^1.0.0"
     ssb-ref "^2.9.1"
 
-ssb-friends@^3.1.3, ssb-friends@^3.1.7:
+ssb-friends@^3.1.12:
   version "3.1.12"
   resolved "https://registry.yarnpkg.com/ssb-friends/-/ssb-friends-3.1.12.tgz#b94424f29b77e841897d9a3c29bfa9e207e68396"
   integrity sha512-G8V8RtV0DLXY36rEpArd1zjSY88ErtaRaLuAtc6kIhUBBPlY0mb1wN5CdsuLWnlxis0Mwt5gK2rtjMG8jWC/jA==
@@ -3530,7 +3546,41 @@ ssb-friends@^3.1.3, ssb-friends@^3.1.7:
     pull-stream "^3.6.0"
     ssb-ref "^2.7.1"
 
-ssb-keys@^7.0.13, ssb-keys@^7.1.1, ssb-keys@^7.1.3, ssb-keys@^7.1.4:
+ssb-gossip@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/ssb-gossip/-/ssb-gossip-1.0.4.tgz#c0c14db971269482600281d664fe4995579aa2bc"
+  integrity sha512-h7Vf+bZGC+3WRVMDwFysV30cHGVekZKPPXCkIfG6fseqisSDpp/nz1hj713ZrCS8agOzTtaJoM1x2iHWQg+/PQ==
+  dependencies:
+    atomic-file "^1.1.5"
+    deep-equal "^1.0.1"
+    has-network "0.0.1"
+    ip "^1.1.5"
+    mdmanifest "^1.0.8"
+    muxrpc-validation "^3.0.0"
+    on-change-network "0.0.2"
+    on-wakeup "^1.0.1"
+    pull-notify "^0.1.1"
+    pull-ping "^2.0.2"
+    pull-stream "^3.6.9"
+    ssb-ref "^2.13.9"
+    statistics "^3.3.0"
+
+ssb-invite@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/ssb-invite/-/ssb-invite-2.0.3.tgz#7be7604633ec6667018c351d6eabe0c8353cbf11"
+  integrity sha512-oFUIYfxWe2xcNCns5aH5MEDSBmbH3N9WvXlhbM05SqMO/0au6VMXvUDKD1VALVunU1FVPzMAcS0/YsVlLS8ang==
+  dependencies:
+    cont "^1.0.3"
+    explain-error "^1.0.4"
+    ip "^1.1.5"
+    level "^4.0.0"
+    level-sublevel "^6.6.5"
+    mdmanifest "^1.0.8"
+    ssb-client "^4.6.0"
+    ssb-keys "^7.1.3"
+    ssb-ref "^2.13.9"
+
+ssb-keys@^7.0.13, ssb-keys@^7.1.3, ssb-keys@^7.1.4:
   version "7.1.4"
   resolved "https://registry.yarnpkg.com/ssb-keys/-/ssb-keys-7.1.4.tgz#cbca237f42b2073002e60b95114ce90079e76263"
   integrity sha512-tRDoFAeTL4NVGE4WFgd4Jck7wmsz340iE3Z8KEpGyFkxo5LqH01Gl+8aCDKqNQoJpCByG7luSSTztS7zl6yk8w==
@@ -3580,7 +3630,7 @@ ssb-query@^2.1.0:
     flumeview-query "^7.0.0"
     pull-stream "^3.6.2"
 
-ssb-ref@^2.0.0, ssb-ref@^2.11.1, ssb-ref@^2.12.0, ssb-ref@^2.13.3, ssb-ref@^2.13.8, ssb-ref@^2.13.9, ssb-ref@^2.3.0, ssb-ref@^2.6.2, ssb-ref@^2.7.1, ssb-ref@^2.9.1:
+ssb-ref@^2.0.0, ssb-ref@^2.11.1, ssb-ref@^2.12.0, ssb-ref@^2.13.3, ssb-ref@^2.13.9, ssb-ref@^2.3.0, ssb-ref@^2.6.2, ssb-ref@^2.7.1, ssb-ref@^2.9.1:
   version "2.13.9"
   resolved "https://registry.yarnpkg.com/ssb-ref/-/ssb-ref-2.13.9.tgz#1de8c5b4f12e5b743be95705656ad2706c0e3cd0"
   integrity sha512-TfatNqLvoP+eW/pMIbCmNcaoDq4R2k8jCtWkwDKx4AtluN/LwtyP931d5Mh+2gmzA04W7kxkr6f5ENGgdadMYg==
@@ -3590,12 +3640,28 @@ ssb-ref@^2.0.0, ssb-ref@^2.11.1, ssb-ref@^2.12.0, ssb-ref@^2.13.3, ssb-ref@^2.13
     is-valid-domain "~0.0.1"
     multiserver-address "^1.0.1"
 
-ssb-server@^13.3.0:
-  version "13.6.1"
-  resolved "https://registry.yarnpkg.com/ssb-server/-/ssb-server-13.6.1.tgz#486e8a0be03af11aec66551d5f6ee99505ba0f34"
-  integrity sha512-FMlq0QYJGCPZOBkv88Yg02BT7udKpmSM0UGZ7YT6/USRhw+zVIrhCVJ1z3lRCNJ8ejLVC1R2jAw/EBEuD798Eg==
+ssb-replicate@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/ssb-replicate/-/ssb-replicate-1.0.4.tgz#7f2ede06bbc2555e41fcd259036cf8bc55b1e9b3"
+  integrity sha512-N27WG2Ug2o+r1kEIgWVo8iVdUZqRAQtSHCg7TKQ0YXzUiyoglHlTCJUynGTcXNiB04RRo1DtVaPXdZ74ZJ4Dtg==
   dependencies:
-    atomic-file "^1.1.5"
+    deep-equal "^1.0.1"
+    mdmanifest "^1.0.8"
+    observ-debounce "^1.1.1"
+    obv "0.0.1"
+    pull-cat "^1.1.11"
+    pull-next "^1.0.1"
+    pull-notify "^0.1.1"
+    pull-paramap "^1.2.2"
+    pull-pushable "^2.2.0"
+    pull-stream "^3.6.9"
+    ssb-ref "^2.13.9"
+
+ssb-server@^14.0.3:
+  version "14.0.3"
+  resolved "https://registry.yarnpkg.com/ssb-server/-/ssb-server-14.0.3.tgz#d294b5f435d4b4d97816ea0c0ed376e8e83c7605"
+  integrity sha512-faxTzCn3cOXKrMBRtFGHAAFXtkB0Lvb4T193q2MVbu6sP4Ap3SqwU5jU2WLT1lUKEoh/lh/Bjfh/4m97W4ERJQ==
+  dependencies:
     bash-color "~0.0.3"
     broadcast-stream "^0.2.1"
     cont "~1.0.3"
@@ -3603,53 +3669,42 @@ ssb-server@^13.3.0:
     deep-equal "^1.0.1"
     explain-error "^1.0.3"
     has-network "0.0.1"
-    ip "^1.1.5"
-    mdmanifest "^1.0.4"
+    mdmanifest "^1.0.8"
     minimist "^1.1.3"
     mkdirp "~0.5.0"
     multiblob "^1.13.0"
     multiserver "^3.1.0"
-    multiserver-address "^1.0.1"
     muxrpc-validation "^2.0.0"
     muxrpcli "^1.0.0"
     mv "^2.1.1"
-    observ-debounce "^1.1.1"
-    obv "0.0.1"
-    on-change-network "0.0.2"
-    on-wakeup "^1.0.0"
     osenv "^0.1.5"
     pull-cat "~1.1.5"
     pull-file "^1.0.0"
     pull-many "~1.0.6"
-    pull-next "^1.0.0"
-    pull-notify "0.1.1"
-    pull-paramap "~1.2.1"
-    pull-ping "^2.0.2"
     pull-pushable "^2.2.0"
     pull-stream "^3.6.2"
-    pull-stringify "^2.0.0"
     rimraf "^2.4.2"
-    secret-stack "^5.1.0"
-    ssb-blobs "^1.1.4"
+    secret-stack "^6.0.1"
+    ssb-blobs "^1.1.9"
     ssb-client "^4.5.7"
     ssb-config "^3.0.0"
-    ssb-db "^18.6.2"
-    ssb-ebt "^5.1.4"
-    ssb-friends "^3.1.3"
-    ssb-keys "^7.1.1"
+    ssb-db "^19.0.3"
+    ssb-ebt "^5.3.8"
+    ssb-friends "^3.1.12"
+    ssb-gossip "^1.0.4"
+    ssb-invite "^2.0.3"
     ssb-links "^3.0.2"
     ssb-ooo "^1.1.0"
     ssb-query "^2.1.0"
     ssb-ref "^2.13.9"
+    ssb-replicate "^1.0.4"
     ssb-ws "^5.1.1"
-    statistics "^3.0.0"
     stream-to-pull-stream "^1.6.10"
     zerr "^1.0.0"
 
-ssb-tunnel@^1.2.0:
+"ssb-tunnel@https://github.com/mindshade/ssb-tunnel":
   version "1.2.0"
-  resolved "https://registry.yarnpkg.com/ssb-tunnel/-/ssb-tunnel-1.2.0.tgz#a783d747c738997ac3366541631ff0a7f2635bef"
-  integrity sha512-iYU0A+c51uQVN2Ahz+r6Xz+LNNpzhoCu/rMLjqzkvXKR4Yzgoai7w6BeIrLGGbKpvDDQxrBVWC3WzHStz+NIDg==
+  resolved "https://github.com/mindshade/ssb-tunnel#14d804cf60612e0e8c26152bef230f83fa984906"
   dependencies:
     pull-pair "^1.1.0"
     ssb-client "^4.5.7"
@@ -3691,7 +3746,7 @@ static-extend@^0.1.1:
     define-property "^0.2.5"
     object-copy "^0.1.0"
 
-statistics@^3.0.0, statistics@^3.3.0:
+statistics@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/statistics/-/statistics-3.3.0.tgz#ec7b4750ff03ab24a64dd9b357a78316bead78aa"
   integrity sha1-7HtHUP8DqySmTdmzV6eDFr6teKo=

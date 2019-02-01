@@ -17,7 +17,7 @@ HOST_NAME=$1
 docker build -t ssb-node -f ssb-node/ssb-node.docker ${DOCKER_IMAGE}
 
 docker volume create ssb-lab-node_modules
-docker volume create ssb-lab-yarn_cache
+docker volume create ssb-lab-cache
 
 docker network inspect ssb-laboratory &>/dev/null || docker network create --driver bridge ssb-laboratory
 
@@ -27,7 +27,7 @@ docker run --rm -it \
     --hostname=${HOST_NAME} \
     --name=${HOST_NAME} \
     --mount type=volume,src=ssb-lab-node_modules,dst=/root/ssb-node/node_modules \
-    --mount type=volume,src=ssb-lab-yarn_cache,dst=/yarn_cache \
+    --mount type=volume,src=ssb-lab-cache,dst=/cache \
     --mount type=bind,source="$(pwd)"/ssb-node/src,target=/root/ssb-node/src \
     --mount type=bind,source="$(pwd)"/ssb-node/package.json,target=/root/ssb-node/package.json \
     --mount type=bind,source="$(pwd)"/ssb-node/yarn.lock,target=/root/ssb-node/yarn.lock \

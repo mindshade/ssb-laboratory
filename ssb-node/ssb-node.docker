@@ -1,7 +1,7 @@
 FROM node:carbon-alpine
 # as ssb-node-intermediate
 
-RUN apk add nano python make libtool g++ autoconf automake iptables
+RUN apk add nano python make libtool g++ autoconf automake iptables iftop git
 
 RUN mkdir -p /root/ssb-node
 #COPY package.json /root/ssb-node
@@ -9,9 +9,9 @@ RUN mkdir -p /root/ssb-node
 RUN mkdir /root/ssb-node/node_modules
 VOLUME /root/ssb-node/node_modules
 
-RUN mkdir /yarn_cache
-VOLUME /yarn_cache
-RUN yarn config set cache-folder /yarn_cache
+RUN mkdir -p /cache/yarn
+VOLUME /cache
+RUN yarn config set cache-folder /cache/yarn
 
 # Install packages, and remove package.json + yarn.lock since they are mounted from the host when
 # a container is started (for ease of development).

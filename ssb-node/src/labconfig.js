@@ -20,5 +20,6 @@ function getHost() {
 module.exports = {
     getIP,
     getHost,
-    appKey: 'fjZnztSijc/aoGDhCvkFoqoR7JHHOmSXJvKmOP58IrM='
+    appKey: 'fjZnztSijc/aoGDhCvkFoqoR7JHHOmSXJvKmOP58IrM=', // Lab key
+    //appKey: '1KHLiKZvAvjbY1ziZEHMXawbCEIM6qwjCDm3VYRan/s=' // Standard Scuttlebutt network key...
 };

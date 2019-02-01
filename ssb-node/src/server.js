@@ -1,5 +1,4 @@
 const log = require('util').log;
-const Server = require('ssb-server');
 const Config = require('ssb-config/inject');
 const fs = require('fs');
 const path = require('path');
@@ -9,29 +8,28 @@ const labConfig = require('./labconfig');
 
 const keys = ssbKeys.loadOrCreateSync('./ssb-laboratory.key');
 
+// Inspired from Patchwork, see https://github.com/ssbc/patchwork/blob/master/server-process.js
+var createSbot = require('ssb-server')
+    .use(require('ssb-server/plugins/master'))
+    .use(require('ssb-server/plugins/no-auth'))
+    .use(require('ssb-server/plugins/unix-socket'))
+    .use(require('ssb-server/plugins/local'))
+    .use(require('ssb-server/plugins/logging'))
+    .use(require('ssb-gossip'))
+    .use(require('ssb-replicate'))
+    .use(require('ssb-friends'))
+    .use(require('ssb-blobs'))
+    .use(require('ssb-invite'))
+    .use(require('ssb-tunnel'))
+    .use(require('./plugins/chat'));
+
+
 function start(verbose, ...cfgs) {
-    return new Promise((resolve, reject) => {
         log(`Starting ssb-server...`);
         const customConfig = merge({}, ...cfgs);
         const config = Config('ssb-laboratory', customConfig);
 
-        // Inspired from Patchwork, see https://github.com/ssbc/patchwork/blob/master/server-process.js
-        const server = Server.createSsbServer(function (err, result) {
-            if (err) log(err);
-            resolve(server);
-        })
-            .use(require('ssb-server/plugins/master'))
-            .use(require('ssb-server/plugins/gossip'))
-            .use(require('ssb-server/plugins/replicate'))
-            .use(require('ssb-server/plugins/no-auth'))
-            .use(require('ssb-server/plugins/unix-socket'))
-            //    .use(require('ssb-friends'))
-            .use(require('ssb-server/plugins/invite'))
-            .use(require('ssb-server/plugins/local'))
-            .use(require('ssb-server/plugins/logging'))
-            .use(require('ssb-tunnel'))
-            .use(require('./plugins/chat'))
-            (config);
+        const server = createSbot(config);
 
         // Save an updated list (manifest) of methods this server has made public
         // in a location that ssb-client will know to check
@@ -44,12 +42,9 @@ function start(verbose, ...cfgs) {
             log(`Configuration: ${JSON.stringify(config)}`);
         }
         fs.writeFileSync(manifestFilename, manifestAsString);
-        log(`Started ssb-server`);
 
-        // WORKAROUND, when tunnel is enabled the createSsbServer callback never returns, which hangs
-        // the startup unless we resolve the promise here. TODO: Investigate
-        setTimeout(function() { resolve(server); }, 2000);
-    });
+        log(`Started ssb-server`);
+        return server;
 }
 
 function cfgDefault(ip, port) {
