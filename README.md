@@ -50,14 +50,14 @@ Be careful to execute the steps in order, as globally numbered (for all ssb-node
     ./ssb-node.sh start ssb-A.local
     yarn start 
     
+#### Step 2
+    
+    # Connect to hub and establish tunnel (see Node B below for $PORTALADDRESS)
+    start --tunnel $PORTALADDRESS
+    
 #### Step 3
-    
-    # Connect to hub and establish tunnel (see step 2 below for $PORTALADDRESS)
-    start --tunnel $PORTALADRESS
-    
-#### Step 4
 
-    # Find out A:s ID so we can send a message from C
+    # Find out A's ID so we can send a message from C
     getId
     # Lets denote the ID as $ID_A
 
@@ -66,7 +66,7 @@ Be careful to execute the steps in order, as globally numbered (for all ssb-node
 #### Step 1
 
     ./ssb-node.sh start ssb-B.local
-    # Open network port for incomping connections, since B is a hub
+    # Open network port for incoming connections, since B is a hub
     source script/fw-hub.sh
     yarn start
 
@@ -88,14 +88,14 @@ Be careful to execute the steps in order, as globally numbered (for all ssb-node
 #### Step 3
     
     # Connect to hub and establish tunnel (see step 2 below for $PORTALADDRESS)
-    start --tunnel $PORTALADRESS     
+    start --tunnel $PORTALADDRESS     
     
 #### Step 5
 
     # Get the $ID_A from step 4 above and then send a message from C to A
     chat "Hello this is C calling A!" $ID_A
     
-    # Now the message should be printed in A:s console. 
+    # Now the message should be printed in A's console. 
     # How about trying to send a message back from A to C?
     
 ## References
