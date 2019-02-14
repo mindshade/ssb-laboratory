@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const ssbKeys = require('ssb-keys');
 const merge = require('deep-extend');
-const labConfig = require('./labconfig');
+const labConfig = require('../labconfig');
 
 const keys = ssbKeys.loadOrCreateSync('./ssb-laboratory.key');
 
@@ -21,15 +21,16 @@ var createSbot = require('ssb-server')
     .use(require('ssb-blobs'))
     .use(require('ssb-invite'))
     .use(require('ssb-tunnel'))
-    .use(require('./plugins/chat'));
+    .use(require('../plugins/chat'));
 
+let server;
 
 function start(verbose, ...cfgs) {
         log(`Starting ssb-server...`);
         const customConfig = merge({}, ...cfgs);
         const config = Config('ssb-laboratory', customConfig);
 
-        const server = createSbot(config);
+        server = createSbot(config);
 
         // Save an updated list (manifest) of methods this server has made public
         // in a location that ssb-client will know to check
@@ -100,11 +101,36 @@ function cfgTunnelToPortal(portalId, portalAddress) {
 }
 
 
+const rpcs = {};
+
+function tunnelRpc(portalId, remoteKey, cb) {
+
+    const remoteId = /^@([^=]+=)\.ed25519$/g.exec(remoteKey)[1];
+    const tunnelAddress = `tunnel:${portalId}:${remoteKey}~shs:${remoteKey}`;
+
+    if (rpcs && rpcs[remoteId] && !rpcs[remoteId].closed) {
+        console.log("Reused existing remote rpc connection to:"+rpcs[remoteId].id);
+        cb(null, rpcs[remoteId]);
+    } else {
+        server.connect(tunnelAddress, function (err, rpc_remote) { // See node_modules/secret-stack/core.js:206
+            if (err) {
+                cb(err);
+            } else {
+                console.log("Opened new remote rpc connection to:"+rpc_remote.id);
+                rpcs[remoteId] = rpc_remote;
+                cb(null, rpc_remote);
+            }
+        });
+    }
+}
+
+
 module.exports = {
     start,
     cfgDefault,
     cfgPortal,
-    cfgTunnelToPortal
+    cfgTunnelToPortal,
+    tunnelRpc
 };
 
 

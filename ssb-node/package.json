@@ -1,9 +1,13 @@
 {
   "name": "ssb-node",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "SSB Laboratory",
   "main": "src/index.js",
   "license": "MIT",
+  "author": {
+    "email": "fredrik.w.engberg@gmail.com",
+    "name": "Fredrik W Engberg"
+  },
   "private": true,
   "_comment": "Check https://github.com/ssbc/patchwork/blob/master/package.json for dependency versions that works together",
   "dependencies": {
@@ -22,7 +26,7 @@
     "ssb-ref": "^2.13.9",
     "ssb-replicate": "^1.0.4",
     "ssb-server": "^14.0.3",
-    "ssb-tunnel": "https://github.com/mindshade/ssb-tunnel",
+    "ssb-tunnel": "^1.2.0",
     "vorpal": "^1.11.4"
   },
   "scripts": {

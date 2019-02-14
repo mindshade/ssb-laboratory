@@ -8,4 +8,4 @@ iptables -I INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -P OUTPUT ACCEPT
 iptables -P INPUT DROP
 
-iptables -L -v
+iptables -L -vn

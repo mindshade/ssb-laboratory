@@ -1,3 +1,6 @@
+// NOTE: This is work in progress on an attempt to replace the `ssb-node.sh` with a JS version. The goal is to
+// provide more flexible control over how to rebuild the container, setting up docker etc.
+
 var Docker = require('dockerode');
 var fs     = require('fs');
 

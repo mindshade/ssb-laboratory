@@ -53,12 +53,12 @@ Be careful to execute the steps in order, as globally numbered (for all ssb-node
 #### Step 2
     
     # Connect to hub and establish tunnel (see Node B below for $PORTALADDRESS)
-    start --tunnel $PORTALADDRESS
+    serer-start --tunnel $PORTALADDRESS
     
 #### Step 3
 
     # Find out A's ID so we can send a message from C
-    getId
+    inspect-id
     # Lets denote the ID as $ID_A
 
 ### Node B (hub/portal)
@@ -73,9 +73,9 @@ Be careful to execute the steps in order, as globally numbered (for all ssb-node
 #### Step 2
 
     # Start the ssb-server in portal mode
-    start --portal
+    server-start --portal
     # Find the address to connect tunnels to from A and C
-    getAddress
+    inspect-address
     # Lets denote the address returned as $PORTALADDRESS
 
 ### Node C
@@ -88,12 +88,12 @@ Be careful to execute the steps in order, as globally numbered (for all ssb-node
 #### Step 3
     
     # Connect to hub and establish tunnel (see step 2 below for $PORTALADDRESS)
-    start --tunnel $PORTALADDRESS     
+    server-start --tunnel $PORTALADDRESS     
     
 #### Step 5
 
     # Get the $ID_A from step 4 above and then send a message from C to A
-    chat "Hello this is C calling A!" $ID_A
+    chat-tell $ID_A "Hello this is C calling A!" 
     
     # Now the message should be printed in A's console. 
     # How about trying to send a message back from A to C?
@@ -111,6 +111,8 @@ Be careful to execute the steps in order, as globally numbered (for all ssb-node
 - <https://github.com/ssbc/ssb-tunnel>
 - <https://github.com/dthree/vorpal/wiki>
 
-# TODO
+# Known issues
 
-- [ ] Investigate why invites do not work, could be that the custom app-key is not applied.
+- [ ] Invites do not work, could be that the custom app-key is not applied. See issue <https://github.com/ssbc/ssb-invite/issues/1>.
+- [ ] Stopping and restarting the server causes IO error to be thrown by `levelup` since locks on db files are not properly released when server is stopped.
+
