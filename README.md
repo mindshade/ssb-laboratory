@@ -13,7 +13,7 @@ with different configuration profiles.
 
 ## Rationale
 
-ssb-laboratory was created to enable exploratory testing in the SSB ecosystem of plugins tools. At the heart there is a command line interface which is used to control the experiments. 
+ssb-laboratory was created to enable exploratory testing in the SSB ecosystem of plugins and tools. At the heart there is a command line interface which is used to control the experiments. 
 
 Docker is used to provide a quick scratch environment which is reset each time it exits.
 
