@@ -28,10 +28,10 @@ if [[ "$1" == "start" ]]; then
         --hostname=${HOST_NAME} \
         --name=${HOST_NAME} \
         --mount type=volume,src=ssb-lab-cache,dst=/cache \
-        --mount type=bind,source="$(pwd)"/ssb-node/src,target=/root/ssb-node/src \
+        --mount type=bind,source="$(pwd)"/ssb-node/src,target=/root/ssb-node/src,readonly \
         --mount type=bind,source="$(pwd)"/ssb-node/package.json,target=/root/ssb-node/package.json \
         --mount type=bind,source="$(pwd)"/ssb-node/yarn.lock,target=/root/ssb-node/yarn.lock \
-        --mount type=bind,source="$(pwd)"/ssb-node/script,target=/root/ssb-node/script \
+        --mount type=bind,source="$(pwd)"/ssb-node/script,target=/root/ssb-node/script,readonly \
         ${EPOINT} \
         ${DOCKER_IMAGE}
 fi
