@@ -11,6 +11,24 @@ with different configuration profiles.
 
 - Clone this repo.
 
+## Rationale
+
+ssb-laboratory was created to enable exploratory testing in the SSB ecosystem of plugins tools. At the heart there is a command line interface which is used to control the experiments. 
+
+Docker is used to provide a quick scratch environment which is reset each time it exits.
+
+The source code and scripts are mounted inside the containers to enable rapid changes of code (on the host) which is then directly reflected inside all running containers. 
+
+A typical workflow is to start number of containers and then start the cli inside them. Try something, modify the code on the host and restart the cli inside the containers to test the modification stuff.
+
+Add your own cli commands to `src/commands` and your own SSB plugins to `src/plugins` (experiment plugins need to be registered in `src/util/server.js`).  
+
+## Notes on the usage of Docker
+
+The Docker image `ssb-node` needs only be rebuilt if package.json is changed, or if the dockerfile is modified. The `yarn` cache and `node_modules` are mounted as docker volumes to save time and avoid having to rebuild `node_modules`.
+
+When you need to reset the laboratory, just exit the docker containers and spin up a few new ones. All SSB state, like keys, databases etc are stored only in the container and is destroyed when the container exits.
+
 ## Starting a laboratory ssb-node
 
 First build the base container. This builds the node modules, which takes a little while. Good thing is that this build
