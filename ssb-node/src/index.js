@@ -1,6 +1,7 @@
 const fs = require('fs');
 const cli = require('./util/cli');
 const labconfig = require('./labconfig');
+const server = require('./util/server');
 
 const nodeRootDir = '/root/ssb-node';
 
@@ -13,6 +14,8 @@ const { vorpal, logAndCb, log, logErr, logAsJSON } = cli;
     config['port'] = 9876;
     config['ip'] = await labconfig.getIP();
     config['hostname'] = await labconfig.getHost();
+
+    server.init('/tmp', config.hostname);
 
     // Set up state object which is shared between all commands
     const state = {};

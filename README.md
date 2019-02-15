@@ -5,7 +5,7 @@ with different configuration profiles.
 
 ## Prerequisites
 
-- Docker installed. (ssb-laboratory has been tested on MacOS)
+- Docker installed. (ssb-laboratory has been tested on a MacOS host)
 
 ## Setup
 

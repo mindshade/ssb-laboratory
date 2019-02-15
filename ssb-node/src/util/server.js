@@ -1,14 +1,10 @@
 const log = require('util').log;
 const Config = require('ssb-config/inject');
-const fs = require('fs');
-const path = require('path');
 const ssbKeys = require('ssb-keys');
 const merge = require('deep-extend');
 const labConfig = require('../labconfig');
 
-const keys = ssbKeys.loadOrCreateSync('./ssb-laboratory.key');
-
-// Inspired from Patchwork, see https://github.com/ssbc/patchwork/blob/master/server-process.js
+// Inspired by Patchwork module setup, see https://github.com/ssbc/patchwork/blob/master/server-process.js
 var createSbot = require('ssb-server')
     .use(require('ssb-server/plugins/master'))
     .use(require('ssb-server/plugins/no-auth'))
@@ -24,32 +20,31 @@ var createSbot = require('ssb-server')
     .use(require('../plugins/chat'));
 
 let server;
+let nodeName;
+let keys;
+let dataPath;
+
+function init(path, name) {
+    dataPath = path;
+    nodeName = name;
+    keys = ssbKeys.loadOrCreateSync(`${dataPath}/${nodeName}.key`);
+}
 
 function start(verbose, ...cfgs) {
-        log(`Starting ssb-server...`);
-        const customConfig = merge({}, ...cfgs);
-        const config = Config('ssb-laboratory', customConfig);
-
-        server = createSbot(config);
-
-        // Save an updated list (manifest) of methods this server has made public
-        // in a location that ssb-client will know to check
-        const manifest = server.getManifest();
-        const manifestAsString = JSON.stringify(manifest);
-        const manifestFilename = path.join(config.path, 'manifest.json');
-        if (verbose) {
-            log(`Writing manifest to ${manifestFilename}`);
-            log(`Manifest: ${manifestAsString}`);
-            log(`Configuration: ${JSON.stringify(config)}`);
-        }
-        fs.writeFileSync(manifestFilename, manifestAsString);
-
-        log(`Started ssb-server`);
-        return server;
+    log(`Starting ssb-server...`);
+    const customConfig = merge({}, ...cfgs);
+    const config = Config(`${nodeName}`, customConfig);
+    if (verbose) {
+        log(`Configuration: ${JSON.stringify(config)}`);
+    }
+    server = createSbot(config);
+    log(`Started ssb-server`);
+    return server;
 }
 
 function cfgDefault(ip, port) {
     return {
+        path: dataPath+"/"+nodeName,
         port: 9876,
         host: ip,
         pub: false,
@@ -126,6 +121,7 @@ function tunnelRpc(portalId, remoteKey, cb) {
 
 
 module.exports = {
+    init,
     start,
     cfgDefault,
     cfgPortal,
