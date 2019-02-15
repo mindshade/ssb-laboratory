@@ -3897,6 +3897,11 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
+tiny-worker@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/tiny-worker/-/tiny-worker-2.1.2.tgz#6feb363b87885582fdc6d91b37fe00dd612b84f2"
+  integrity sha512-t8xrlrw0ScBnJ1K5ziHcD6u2SgWpE9Tozv4EIqpXMnCfEVc3pWzMx+ZFwqpXk20C4WTRoLZVBi9v1tLkaciCTg==
+
 to-buffer@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/to-buffer/-/to-buffer-1.1.1.tgz#493bd48f62d7c43fcded313a03dcadb2e1213a80"

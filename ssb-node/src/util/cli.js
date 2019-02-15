@@ -11,7 +11,7 @@ function log(msg) {
 }
 
 function logErr(err) {
-    vorpal.log(vorpal.chalk.red(err.stack ? err.stack : JSON.stringify(err)));
+    vorpal.log(vorpal.chalk.red(err.stack ? err.message+"\n"+err.stack : err));
 }
 
 function logAsJSON(obj, pretty) {
@@ -27,10 +27,15 @@ function show(promptInfo) {
         .show();
 }
 
+function exec(command) {
+    vorpal.exec(command);
+}
+
 module.exports = {
     vorpal,
     log,
     logErr,
     logAsJSON,
-    show
+    show,
+    exec
 };
