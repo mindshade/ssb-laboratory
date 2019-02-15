@@ -11,10 +11,10 @@ module.exports = function(cli, config, state) {
         });
     }
 
-    vorpal.command('chat-hello <ssb_key> <myname>', 'Send hello message using the chat plugin to remote ssb node using a tunnel.')
+    vorpal.command('chat-hello <id> <myname>', 'Send hello message using the chat plugin to remote ssb node using a tunnel.')
         .action(function (args, cb) {
             if (state.ssb_server && state.portalId && state.portalAddress) {
-                _withRemoteChatEndpoint(state.portalId, args.ssb_key, function(err, chat) {
+                _withRemoteChatEndpoint(state.portalId, args.id, function(err, chat) {
                     if (err) logErr(err);
                     else chat.hello(args.myname, function (err, reply) {
                         if (err) logErr(err);
@@ -31,10 +31,10 @@ module.exports = function(cli, config, state) {
         });
 
 
-    vorpal.command('chat-tell <ssb_key> <message>', 'Tell a remote node a message using the chat plugin over a tunnel.')
+    vorpal.command('chat-tell <id> <message>', 'Tell a remote node a message using the chat plugin over a tunnel.')
         .action(function (args, cb) {
             if (state.ssb_server && state.portalId && state.portalAddress) {
-                _withRemoteChatEndpoint(state.portalId, args.ssb_key, function(err, chat) {
+                _withRemoteChatEndpoint(state.portalId, args.id, function(err, chat) {
                     if (err) logErr(err);
                     else chat.tell(args.message, function (err, reply) {
                         if (err) logErr(err);
@@ -50,10 +50,10 @@ module.exports = function(cli, config, state) {
             }
         });
 
-    vorpal.command('chat-whisper <ssb_key> <message>', 'Try whispering to a remote node using the chat plugin over a tunnel. Note: The whisperee must have allowed you as a whisperer this first.')
+    vorpal.command('chat-whisper <id> <message>', 'Try whispering to a remote node using the chat plugin over a tunnel. Note: The whisperee must have allowed you as a whisperer this first.')
         .action(function (args, cb) {
             if (state.ssb_server && state.portalId && state.portalAddress) {
-                _withRemoteChatEndpoint(state.portalId, args.ssb_key, function(err, chat) {
+                _withRemoteChatEndpoint(state.portalId, args.id, function(err, chat) {
                     if (err) logErr(err);
                     else chat.whisper(args.message, function (err, reply) {
                         if (err) logErr(err);
@@ -69,10 +69,10 @@ module.exports = function(cli, config, state) {
             }
         });
 
-    vorpal.command('chat-allow-whisperee <ssb_key>', 'Allow a whisperee to whisper to us.')
+    vorpal.command('chat-allow-whisperee <id>', 'Allow a whisperee to whisper to us.')
         .action(function (args, cb) {
             if (state.ssb_server) {
-                state.ssb_server.chat.allow(args.ssb_key);
+                state.ssb_server.chat.allow(args.id);
             } else {
                 log("Server not started, or tunnel is not activated.");
             }
