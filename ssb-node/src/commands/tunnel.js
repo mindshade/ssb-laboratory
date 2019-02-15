@@ -4,10 +4,10 @@ module.exports = function(cli, config, state) {
 
     const { vorpal, logAndCb, log, logErr, logAsJSON } = cli;
 
-    vorpal.command('tunnel-ping <ssb_key>', 'Send a tunnel ping to ssb node with given key.')
+    vorpal.command('tunnel-ping <id>', 'Send a tunnel ping to ssb node with given is. Requires that sender and receiver nodes are connected to same portal.')
         .action(function (args, cb) {
             if (state.ssb_server && state.portalId && state.portalAddress) {
-                server.tunnelRpc(state.portalId, args.ssb_key, function(err, rpc_remote) {
+                server.tunnelRpc(state.portalId, args.id, function(err, rpc_remote) {
                     if (err) logErr(err);
                     else {
                         vorpal.log("ping: rpc_remote id = " + rpc_remote.id);

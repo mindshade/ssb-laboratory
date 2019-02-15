@@ -4,7 +4,7 @@ module.exports = function(cli, config, state) {
 
     const {vorpal, logAndCb, log, logErr, logAsJSON} = cli;
 
-    vorpal.command('inspect-id', 'Show my ssb identity, using the whoami method.')
+    vorpal.command('inspect-id', 'Show my ssb identity (public key), using the whoami method.')
         .option('-v, --verbose', 'Verbose')
         .action(function (args, cb) {
             if (state.ssb_server) {
