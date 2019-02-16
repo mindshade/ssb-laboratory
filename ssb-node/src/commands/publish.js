@@ -25,7 +25,11 @@ module.exports = function(cli, config, state) {
                     }
                 }
 
-                state.ssb_server.publish(publishMessage, function (err, msg) {
+                state.ssb_server.identities.publishAs({
+                    id: state.ssb_server.id,
+                    content: publishMessage,
+                    private: false,
+                }, function (err, msg) {
                     if (err) {
                         logErr(err)
                     } else if (args.options.verbose) {
