@@ -21,6 +21,7 @@
     "ssb-config": "^3.2.3",
     "ssb-friends": "^3.1.12",
     "ssb-gossip": "^1.0.4",
+    "ssb-identities": "^2.0.7",
     "ssb-invite": "^2.0.3",
     "ssb-keys": "^7.1.4",
     "ssb-ref": "^2.13.9",

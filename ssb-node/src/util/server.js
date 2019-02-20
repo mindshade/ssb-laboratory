@@ -17,6 +17,7 @@ var createSbot = require('ssb-server')
     .use(require('ssb-blobs'))
     .use(require('ssb-invite'))
     .use(require('ssb-tunnel'))
+    .use(require('ssb-identities'))
     .use(require('../plugins/chat'));
 
 let server;
