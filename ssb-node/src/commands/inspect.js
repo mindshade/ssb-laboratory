@@ -56,5 +56,32 @@ module.exports = function(cli, config, state) {
                 cb();
             }
         });
+    
+    vorpal.command('inspect-msg-by-type', 'Show messages by type.')
+        .option('-t, --type <messageType>', 'Retrive JSON string as specific message type. Default type is "post".')
+        .action(function (args, cb) {
+            if (state.ssb_server) {
+                let index = 0;
+                let messageType = 'post'
+                if(args.options.type)
+                    messageType = args.options.type
+                pull(
+                    state.ssb_server.messagesByType({type: messageType}),
+                    pull.collect(function (err, msgs) {
+                        if (err) {
+                            logErr(err);
+                        } else {
+                            if (msgs) {
+                                msgs.forEach(m => vorpal.log(`${vorpal.chalk.yellow(index++)}: ${JSON.stringify(m)}`));
+                            }
+                        }
+                        cb();
+                    })
+                );
+            } else {
+                log("Server not started");
+                cb();
+            }
+        });
 
 };
